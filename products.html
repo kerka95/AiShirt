@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termékek - AI Póló Studio</title>
+    <meta name="description" content="Fedezd fel mesterséges intelligenciával generált egyedi pólóinkat. Válassz a legjobb dizájnok közül vagy készítsd el a sajátodat.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-900">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-tshirt text-white text-sm"></i>
+                    </div>
+                    <span class="font-bold text-xl gradient-text">AI Póló Studio</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-stone-700 hover:text-indigo-600 font-medium transition-colors">Főoldal</a>
+                    <a href="#" class="text-indigo-600 font-medium">Termékek</a>
+                    <a href="#" class="text-stone-700 hover:text-indigo-600 font-medium transition-colors">Galéria</a>
+                    <a href="#" class="text-stone-700 hover:text-indigo-600 font-medium transition-colors">Rólunk</a>
+                </div>
+                
+                <!-- Cart & Mobile Menu -->
+                <div class="flex items-center space-x-4">
+                    <button id="cart-btn" class="relative p-2 text-stone-700 hover:text-indigo-600 transition-colors">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-stone-700">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Header Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-br from-stone-100 to-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl lg:text-5xl font-black text-stone-900 mb-4">
+                    Egyedi <span class="gradient-text">AI Pólók</span>
+                </h1>
+                <p class="text-xl text-stone-600 max-w-2xl mx-auto">
+                    Fedezd fel mesterséges intelligenciával készített egyedi pólóinkat, vagy készítsd el a saját dizájnodat.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Filters Section -->
+    <section class="py-8 bg-white border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <!-- Style Filters -->
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-btn active px-4 py-2 rounded-lg border border-stone-300 text-sm font-medium transition-all" data-filter="all">
+                        Minden stílus
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-lg border border-stone-300 text-sm font-medium transition-all" data-filter="realistic">
+                        Realisztikus
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-lg border border-stone-300 text-sm font-medium transition-all" data-filter="cartoon">
+                        Rajzfilm
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-lg border border-stone-300 text-sm font-medium transition-all" data-filter="minimalist">
+                        Minimalista
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-lg border border-stone-300 text-sm font-medium transition-all" data-filter="abstract">
+                        Absztrakt
+                    </button>
+                </div>
+                
+                <!-- Sort Options -->
+                <div class="flex items-center space-x-4">
+                    <label class="text-sm font-medium text-stone-700">Rendezés:</label>
+                    <select id="sort-select" class="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <option value="newest">Legújabbak</option>
+                        <option value="price-low">Ár: alacsonytól magasig</option>
+                        <option value="price-high">Ár: magastól alacsonyig</option>
+                        <option value="popular">Legnépszerűbb</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Products Grid -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Products will be loaded here -->
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loading-state" class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                <p class="mt-4 text-stone-600">Termékek betöltése...</p>
+            </div>
+            
+            <!-- No Results State -->
+            <div id="no-results" class="text-center py-12 hidden">
+                <i class="fas fa-search text-4xl text-stone-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-stone-900 mb-2">Nincs találat</h3>
+                <p class="text-stone-600">Próbálj meg más szűrőket vagy készítsd el a saját dizájnodat!</p>
+                <a href="index.html" class="inline-block mt-4 bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors">
+                    Dizájn készítése
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Create Your Own Section -->
+    <section class="py-16 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="space-y-6">
+                <h2 class="text-3xl lg:text-4xl font-bold text-stone-900">
+                    Nem találtad meg a tökéletes dizájnt?
+                </h2>
+                <p class="text-xl text-stone-600 max-w-2xl mx-auto">
+                    Készítsd el a saját egyedi pólódat percek alatt! Add meg az ötletedet, és hagy dolgozzon a mesterséges intelligencia.
+                </p>
+                <a 
+                    href="index.html" 
+                    class="inline-flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-4 px-8 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105"
+                >
+                    <i class="fas fa-magic"></i>
+                    <span>Saját póló készítése</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-tshirt text-white text-sm"></i>
+                    </div>
+                    <span class="font-bold text-xl">AI Póló Studio</span>
+                </div>
+                <p class="text-stone-400 mb-4">
+                    Egyedi pólók mesterséges intelligenciával generált dizájnokkal
+                </p>
+                <p class="text-stone-500 text-sm">
+                    © 2024 AI Póló Studio. Minden jog fenntartva.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-md w-full p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-stone-900">Kosár</h3>
+                    <button id="close-cart" class="text-stone-500 hover:text-stone-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="cart-items" class="space-y-4 mb-6">
+                    <!-- Cart items will be added here -->
+                </div>
+                <div class="border-t pt-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-semibold text-lg">Összesen:</span>
+                        <span id="cart-total" class="font-bold text-xl text-indigo-600">0 Ft</span>
+                    </div>
+                    <button id="checkout-btn" class="w-full bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors">
+                        Tovább a pénztárhoz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // Products page specific functionality
+        class ProductsPage {
+            constructor() {
+                this.products = [];
+                this.filteredProducts = [];
+                this.currentFilter = 'all';
+                this.currentSort = 'newest';
+                
+                this.init();
+            }
+            
+            init() {
+                this.loadMockProducts();
+                this.bindEvents();
+                this.renderProducts();
+            }
+            
+            loadMockProducts() {
+                // Mock product data - in real app this would come from API
+                this.products = [
+                    {
+                        id: 1,
+                        design: "Futurisztikus város éjszaka",
+                        style: "realistic",
+                        color: "black",
+                        image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-15'),
+                        popular: 95
+                    },
+                    {
+                        id: 2,
+                        design: "Japán sárkány manga stílusban",
+                        style: "cartoon",
+                        color: "white",
+                        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-14'),
+                        popular: 88
+                    },
+                    {
+                        id: 3,
+                        design: "Minimalista geometriai forma",
+                        style: "minimalist",
+                        color: "gray",
+                        image: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-13'),
+                        popular: 76
+                    },
+                    {
+                        id: 4,
+                        design: "Absztrakt színes fúzió",
+                        style: "abstract",
+                        color: "navy",
+                        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-12'),
+                        popular: 82
+                    },
+                    {
+                        id: 5,
+                        design: "Realisztikus oroszlán portré",
+                        style: "realistic",
+                        color: "white",
+                        image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-11'),
+                        popular: 91
+                    },
+                    {
+                        id: 6,
+                        design: "Cuki macska rajzfilm stílusban",
+                        style: "cartoon",
+                        color: "red",
+                        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-10'),
+                        popular: 73
+                    },
+                    {
+                        id: 7,
+                        design: "Minimalista hegyvonulat",
+                        style: "minimalist",
+                        color: "black",
+                        image: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-09'),
+                        popular: 85
+                    },
+                    {
+                        id: 8,
+                        design: "Absztrakt folyékony fém",
+                        style: "abstract",
+                        color: "gray",
+                        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop",
+                        price: 6990,
+                        created: new Date('2024-01-08'),
+                        popular: 79
+                    }
+                ];
+                
+                this.filteredProducts = [...this.products];
+            }
+            
+            bindEvents() {
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleFilter(e));
+                });
+                
+                // Sort select
+                document.getElementById('sort-select').addEventListener('change', (e) => this.handleSort(e));
+                
+                // Hide loading state
+                document.getElementById('loading-state').style.display = 'none';
+            }
+            
+            handleFilter(e) {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                this.currentFilter = e.target.dataset.filter;
+                this.applyFilters();
+            }
+            
+            handleSort(e) {
+                this.currentSort = e.target.value;
+                this.applyFilters();
+            }
+            
+            applyFilters() {
+                // Filter products
+                this.filteredProducts = this.products.filter(product => {
+                    return this.currentFilter === 'all' || product.style === this.currentFilter;
+                });
+                
+                // Sort products
+                this.filteredProducts.sort((a, b) => {
+                    switch (this.currentSort) {
+                        case 'price-low':
+                            return a.price - b.price;
+                        case 'price-high':
+                            return b.price - a.price;
+                        case 'popular':
+                            return b.popular - a.popular;
+                        case 'newest':
+                        default:
+                            return b.created - a.created;
+                    }
+                });
+                
+                this.renderProducts();
+            }
+            
+            renderProducts() {
+                const grid = document.getElementById('products-grid');
+                const noResults = document.getElementById('no-results');
+                
+                if (this.filteredProducts.length === 0) {
+                    grid.innerHTML = '';
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                
+                noResults.classList.add('hidden');
+                
+                grid.innerHTML = this.filteredProducts.map(product => `
+                    <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in">
+                        <div class="aspect-square overflow-hidden">
+                            <img 
+                                src="${product.image}" 
+                                alt="${product.design}"
+                                class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                            >
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">
+                                    ${this.getStyleName(product.style)}
+                                </span>
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star text-sm"></i>
+                                    <span class="text-sm font-medium ml-1">${product.popular}</span>
+                                </div>
+                            </div>
+                            <h3 class="font-semibold text-stone-900 mb-2 line-clamp-2">${product.design}</h3>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-2xl font-bold text-indigo-600">${product.price.toLocaleString()} Ft</span>
+                                <div class="flex items-center space-x-1 text-sm text-stone-500">
+                                    <div class="w-4 h-4 rounded-full border border-stone-300" style="background-color: ${this.getColorCode(product.color)}"></div>
+                                    <span>${this.getColorName(product.color)}</span>
+                                </div>
+                            </div>
+                            <button 
+                                class="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors"
+                                onclick="app.addToCartFromProduct(${product.id})"
+                            >
+                                <i class="fas fa-cart-plus mr-2"></i>
+                                Kosárba rakom
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            getStyleName(style) {
+                const names = {
+                    'realistic': 'Realisztikus',
+                    'cartoon': 'Rajzfilm',
+                    'minimalist': 'Minimalista',
+                    'abstract': 'Absztrakt'
+                };
+                return names[style] || style;
+            }
+            
+            getColorName(color) {
+                const names = {
+                    'white': 'Fehér',
+                    'black': 'Fekete',
+                    'navy': 'Sötétkék',
+                    'gray': 'Szürke',
+                    'red': 'Piros'
+                };
+                return names[color] || color;
+            }
+            
+            getColorCode(color) {
+                const codes = {
+                    'white': '#ffffff',
+                    'black': '#000000',
+                    'navy': '#1e3a8a',
+                    'gray': '#6b7280',
+                    'red': '#dc2626'
+                };
+                return codes[color] || '#6b7280';
+            }
+        }
+        
+        // Initialize products page
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProductsPage();
+        });
+        
+        // Override addToCart for products page
+        app.addToCartFromProduct = function(productId) {
+            const productsPage = window.productsPage || {};
+            const product = productsPage.products?.find(p => p.id === productId);
+            
+            if (product) {
+                const cartItem = {
+                    id: Date.now(),
+                    design: product.design,
+                    style: product.style,
+                    color: product.color,
+                    image: product.image,
+                    price: product.price,
+                    quantity: 1
+                };
+                
+                app.cart.push(cartItem);
+                app.saveCart();
+                app.updateCartCount();
+                app.showNotification('Póló hozzáadva a kosárhoz!', 'success');
+            }
+        };
+    </script>
+</body>
+</html>
