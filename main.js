@@ -115,7 +115,7 @@ class KerkaShirtStudio {
         } finally {
             // Reset button state
             generateBtn.disabled = false;
-            generateText.textContent = 'AI Dizájn Generálása';
+            generateText.textContent = 'Dizájn Generálása';
             generateSpinner.classList.add('hidden');
         }
     }
