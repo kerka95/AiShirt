@@ -1,6 +1,6 @@
-// AI Póló Studio - Main JavaScript
+// Kerka Póló Studio - Main JavaScript
 
-class AITShirtStudio {
+class KerkaShirtStudio {
     constructor() {
         this.selectedStyle = 'realistic';
         this.selectedColor = 'white';
@@ -328,12 +328,12 @@ class AITShirtStudio {
     
     loadMockData() {
         // Load some mock data or initialize default state
-        console.log('AI Póló Studio initialized');
+        console.log('Kerka Póló Studio initialized');
     }
 }
 
 // Initialize the app
-const app = new AITShirtStudio();
+const app = new KerkaTShirtStudio();
 
 // Export for global access
 window.app = app;
