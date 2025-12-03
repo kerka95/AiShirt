@@ -1,6 +1,6 @@
 // Kerka Póló Studio - Main JavaScript
 
-class AIShirtStudio {
+class KerkaTShirtStudio {
     constructor() {
         this.selectedStyle = 'realistic';
         this.selectedColor = 'white';
